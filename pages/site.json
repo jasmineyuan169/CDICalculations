@@ -6,121 +6,53 @@
       {
         "label": "Home",
         "url": "/",
-        "redirect": "/index/1"
+        "redirect":"purchase_and_storage"
       },
       {
-        "label": "示例",
+        "label": "投资测算模型",
         "children": [
           {
-            "label": "页面A",
-            "url": "index",
+            "label": "土地收储/整备",
+            "url": "purchase_and_storage",
             "schema": {
               "type": "page",
-              "title": "页面A",
-              "body": "页面A"
+              "title": "土地收储/整备",
+              "body": ""
             },
             "children": [
               {
-                "label": "页面A-1",
-                "url": "1",
+                "label": "土地收储成本",
+                "url": "cost",
                 "schema": {
                   "type": "page",
-                  "title": "页面A-1",
-                  "body": "页面A-1"
-                }
-              },
-              {
-                "label": "页面A-2",
-                "url": "2",
-                "schema": {
-                  "type": "page",
-                  "title": "页面A-2",
-                  "body": "页面A-2"
-                }
-              },
-              {
-                "label": "页面A-3",
-                "url": "3",
-                "schema": {
-                  "type": "page",
-                  "title": "页面A-3",
-                  "body": "页面A-3"
-                }
-              }
-            ]
-          },
-          {
-            "label": "页面B",
-            "badge": 3,
-            "badgeClassName": "bg-info",
-            "schema": {
-              "type": "page",
-              "title": "页面B",
-              "body": "页面B"
-            }
-          },
-          {
-            "label": "页面C",
-            "schema": {
-              "type": "page",
-              "title": "页面C",
-              "body": "页面C"
-            }
-          },
-          {
-            "label": "列表示例",
-            "url": "/crud",
-            "rewrite": "/crud/list",
-            "icon": "fa fa-cube",
-            "children": [
-              {
-                "label": "列表",
-                "url": "/crud/list",
-                "icon": "fa fa-list",
-                "schemaApi": "get:/pages/crud-list.json"
-              },
-              {
-                "label": "新增",
-                "url": "/crud/new",
-                "icon": "fa fa-plus",
-                "schemaApi": "get:/pages/crud-new.json"
-              },
-              {
-                "label": "查看",
-                "url": "/crud/:id",
-                "schemaApi": "get:/pages/crud-view.json"
-              },
-              {
-                "label": "修改",
-                "url": "/crud/:id/edit",
-                "schemaApi": "get:/pages/crud-edit.json"
+                  "title": "土地收储成本",
+                  "body": ""
+                },
+                "children":[
+                  {
+                    "label": "输入数据",
+                    "url": "input",
+                    "icon":"fa fa-list",
+                    "schemaApi":"get:/pages/storage-input.json"
+                  },
+                  {
+                    "label": "输出报表",
+                    "url": "output",
+                    "icon":"fa fa-list",
+                    "schemaApi":"get:/pages/storage-output.json"
+                  }
+                ]
               }
             ]
           }
         ]
       },
       {
-        "label": "分组2",
+        "label": "友情链接",
         "children": [
           {
-            "label": "用户管理",
-            "schema": {
-              "type": "page",
-              "title": "用户管理",
-              "body": "页面C"
-            }
-          },
-          {
-            "label": "外部链接",
-            "link": "http://baidu.gitee.io/amis"
-          },
-          {
-            "label": "部门管理",
-            "schemaApi": "${API_HOST}/api/amis-mock/mock2/service/form?tpl=tpl3"
-          },
-          {
-            "label": "jsonp 返回示例",
-            "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
+            "label": "CDI官网",
+            "link": "http://www.cdi.com.cn"
           }
         ]
       }

@@ -1,0 +1,288 @@
+{
+  "type": "page",
+  "title": "",
+  "body": [
+    {
+      "type": "button-toolbar",
+      "buttons": [
+        {
+          "type": "button",
+          "label": "导出",
+          "level": "primary",
+          "icon": "fa fa-download pull-left"
+        }
+      ]
+    },
+    {
+      "type": "tabs",
+      "tabsMode": "tiled",
+      "tabs": [
+        {
+          "title": "一、土地补偿成本",
+          "hash": "tab1",
+          "body": [
+            {
+              "type": "crud",
+              "className": "m-t",
+              "api": {
+                "url": "/api/land-costs",
+                "method": "get",
+                "data": {
+                  "category": 1
+                }
+              },
+              "quickSaveApi": "",
+              "quickSaveItemApi": "",
+              "columns": [
+                {
+                  "name": "序号",
+                  "label": "序号",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "项目名称",
+                  "label": "项目名称",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单位",
+                  "label": "单位",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单价（万元）",
+                  "label": "单价（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "成本（万元）",
+                  "label": "成本（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "二、拆迁补偿成本",
+          "hash": "tab2",
+          "body": [
+            {
+              "type": "crud",
+              "className": "m-t",
+              "api": {
+                "url": "/api/land-costs",
+                "method": "get",
+                "data": {
+                  "category": 2
+                }
+              },
+              "quickSaveApi": "",
+              "quickSaveItemApi": "",
+              "columns": [
+                {
+                  "name": "序号",
+                  "label": "序号",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "项目名称",
+                  "label": "项目名称",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单位",
+                  "label": "单位",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单价（万元）",
+                  "label": "单价（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "成本（万元）",
+                  "label": "成本（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "三、人员（企业）补偿成本",
+          "hash": "tab3",
+          "body": [
+            {
+              "type": "crud",
+              "className": "m-t",
+              "api": {
+                "url": "/api/land-costs",
+                "method": "get",
+                "data": {
+                  "category": 3
+                }
+              },
+              "quickSaveApi": "",
+              "quickSaveItemApi": "",
+              "columns": [
+                {
+                  "name": "序号",
+                  "label": "序号",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "项目名称",
+                  "label": "项目名称",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单位",
+                  "label": "单位",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单价（万元）",
+                  "label": "单价（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "成本（万元）",
+                  "label": "成本（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "四、其他不可预见费用",
+          "hash": "tab4",
+          "body": [
+            {
+              "type": "crud",
+              "className": "m-t",
+              "api": {
+                "url": "/api/land-costs",
+                "method": "get",
+                "data": {
+                  "category": 4
+                }
+              },
+              "quickSaveApi": "",
+              "quickSaveItemApi": "",
+              "columns": [
+                {
+                  "name": "序号",
+                  "label": "序号",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "项目名称",
+                  "label": "项目名称",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单位",
+                  "label": "单位",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单价（万元）",
+                  "label": "单价（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "成本（万元）",
+                  "label": "成本（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "五、总成本",
+          "hash": "tab5",
+          "body": [
+            {
+              "type": "crud",
+              "className": "m-t",
+              "api": {
+                "url": "/api/land-costs",
+                "method": "get",
+                "data": {
+                  "category": 5
+                }
+              },
+              "quickSaveApi": "",
+              "quickSaveItemApi": "",
+              "columns": [
+                {
+                  "name": "序号",
+                  "label": "序号",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "项目名称",
+                  "label": "项目名称",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单位",
+                  "label": "单位",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "单价（万元）",
+                  "label": "单价（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "成本（万元）",
+                  "label": "成本（万元）",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

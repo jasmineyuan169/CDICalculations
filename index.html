@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>amis admin</title>
+    <title>CDI自动化测算系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
@@ -48,13 +48,13 @@
 
         const app = {
           type: 'app',
-          brandName: 'Admin',
+          brandName: 'CDI投资测算系统',
           logo: '/public/logo.png',
           header: {
             type: 'tpl',
             inline: false,
             className: 'w-full',
-            tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
+            tpl: '<div class="flex justify-between"><div></div><div>欢迎使用CDI自动化投资测算系统！</div></div>'
           },
           // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
           // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
@@ -62,6 +62,7 @@
           api: '/pages/site.json'
         };
 
+        // 规范化链接函数（导航栏）
         function normalizeLink(to, location = history.location) {
           to = to || '';
 
@@ -100,6 +101,7 @@
           return pathname + search + hash;
         }
 
+        // 判断当前 URL 是否为指定链接
         function isCurrentUrl(to, ctx) {
           if (!to) {
             return false;
@@ -122,6 +124,7 @@
           return decodeURI(pathname) === link;
         }
 
+        // 初始化 amis 应用
         let amisInstance = amis.embed(
           '#root',
           app,
@@ -196,6 +199,7 @@
           }
         );
 
+        // 监听历史记录变化，更新 amis 实例的属性
         history.listen(state => {
           amisInstance.updateProps({
             location: state.location || state
