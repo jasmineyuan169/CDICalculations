@@ -1,122 +1,535 @@
 {
-    "type": "page",
-    "title": "",
-    "body": [
-      {
-        "type": "tabs",
-        "tabsMode": "tiled",
-        "tabs": [
-          {
-            "title": "一、土地补偿指标",
-            "hash": "tab1",
-            "body": [
+  "type": "page",
+  "title": "",
+  "body": [
+    {
+      "type": "tabs",
+      "tabsMode": "tiled",
+      "tabs": [
+        {
+          "title": "一、土地补偿指标",
+          "hash": "tab1",
+          "body": [
+            {
+              "type": "form",
+              "title": "",
+              "api": {
+                "method": "post",  
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 1,
+                  "computing_method": "${computing_method}"
+                }
+              },
+              "body": [
                 {
-                    "type": "form",
-                    "title": "",
-                    "body": [
+                  "type": "radios",
+                  "name": "computing_method",
+                  "required": true,
+                  "label": "请选择土地补偿费用计算方法：",
+                  "options": [
+                    {
+                      "label": "仅知片区总地块面积&平均综合征地补偿标准",
+                      "value": 1
+                    },
+                    {
+                      "label": "已知片区内各细分土地类型的面积和补偿标准",
+                      "value": 2
+                    }
+                  ],
+                  "onEvent": {
+                    "change": {
+                      "actions": [
                         {
-                            "type": "radios",
-                            "name": "计算方法",
-                            "required": true,
-                            "label": "请选择土地补偿费用计算方法：",
-                            "value": 2,
-                            "options": [
-                            {
-                                "label": "仅知片区总地块面积&平均综合征地补偿标准",
-                                "value": 1
-                            },
-                            {
-                                "label": "已知片区内各细分土地类型的面积和补偿标准",
-                                "value": 2
+                          "actionType": "reload",
+                          "componentId": "land-compensation-crud",
+                          "args": {
+                            "category": 1,
+                            "computing_method": "${computing_method}"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "crud",
+                  "className": "m-t",
+                  "initFetch": true,
+                  "api": {
+                    "url": "/api/land-cost-input",
+                    "method": "get",
+                    "data": {
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "id": "land-compensation-crud",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "serial_number",
+                      "label": "序号",
+                      "sortable": true,
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "indicator",
+                      "label": "指标",
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "value",
+                      "label": "取值",
+                      "sortable": true,
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline"
+                      },
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "remark",
+                      "label": "备注",
+                      "type": "operation",
+                      "toggled": true,
+                      "buttons": [
+                        {
+                          "type": "button",
+                          "label": "备注",
+                          "level": "info",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "备注",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${remark}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
                             }
-                          ]
+                          }
                         },
                         {
-                            "type": "crud",
-                            "className": "m-t",
-                            "api": "",
-                            "quickSaveApi": "",
-                            "quickSaveItemApi": "",
-                            "columns": [
-                              {
-                                "name": "序号",
-                                "label": "序号",
-                                "sortable": true,
-                                "type": "text",
-                                "toggled": true
-                              },
-                              {
-                                "name": "指标",
-                                "label": "指标",
-                                "type": "text",
-                                "toggled": true
-                              },
-                              {
-                                "name": "取值",
-                                "label": "取值",
-                                "sortable": true,
-                                "quickEdit": {
-                                    "type": "input-text",
-                                    "required": true,
-                                    "mode": "inline"
-                                  },
-                                "type": "text",
-                                "toggled": true
-                              },
-                              {
-                                "name": "备注",
-                                "label": "备注",
-                                "type": "operation",
-                                "toggled": true,
-                                "buttons": [
-                                    {
-                                        "type": "button",
-                                        "label": "备注",
-                                        "level": "success",
-                                        "actionType": "drawer",
-                                        "drawer": {
-                                            "position": "right",
-                                            "size": "sm",
-                                            "title": "备注",
-                                            "body": "这是个简单的弹框"
-                                        }
-                                    },
-                                    {
-                                        "type": "button",
-                                        "label": "依据文件",
-                                        "level": "info",
-                                        "actionType": "drawer",
-                                        "drawer": {
-                                            "position": "right",
-                                            "size": "sm",
-                                            "title": "依据文件",
-                                            "body": "这是个简单的弹框"
-                                        }
-                                    }
-                                ]
+                          "type": "button",
+                          "label": "依据文件",
+                          "level": "dark",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "依据文件",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${basis}",
+                              "style": {
+                                "white-space": "pre-wrap"
                               }
-                            ]
+                            }
+                          }
                         }
-                    ]
+                      ]
+                    }
+                  ]
                 }
-            ]
-          },
-          {
-            "title": "二、拆迁补偿指标",
-            "hash": "tab2",
-            "body": ""
-          },
-          {
-            "title": "三、人员（企业）补偿指标",
-            "hash": "tab3",
-            "body": ""
-          },
-          {
-            "title": "四、其他不可预见费用比例",
-            "hash": "tab4",
-            "body": ""
-          }
-        ]
-      }
-    ]
-}    
+              ]
+            }
+          ]
+        },
+        {
+          "title": "二、拆迁补偿指标",
+          "hash": "tab2",
+          "body": [
+            {
+              "type": "form",
+              "title": "",
+              "api": {
+                "method": "post",
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 2,
+                  "computing_method": "${computing_method}"
+                }
+              },
+              "body": [
+                {
+                  "type": "crud",
+                  "className": "m-t",
+                  "initFetch": true,
+                  "api": {
+                    "url": "/api/land-input",
+                    "method": "get",
+                    "data": {
+                      "category": 2
+                    }
+                  },
+                  "id": "demolition-compensation-crud",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 2,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 2,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "serial_number",
+                      "label": "序号",
+                      "sortable": true,
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "indicator",
+                      "label": "指标",
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "value",
+                      "label": "取值",
+                      "sortable": true,
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline"
+                      },
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "remark",
+                      "label": "备注",
+                      "type": "operation",
+                      "toggled": true,
+                      "buttons": [
+                        {
+                          "type": "button",
+                          "label": "备注",
+                          "level": "info",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "备注",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${remark}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "label": "依据文件",
+                          "level": "dark",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "依据文件",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${basis}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "三、人员（企业）补偿指标",
+          "hash": "tab3",
+          "body": [
+            {
+              "type": "form",
+              "title": "",
+              "api": {
+                "method": "post",
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 3,
+                  "computing_method": "${computing_method}"
+                }
+              },
+              "body": [
+                {
+                  "type": "crud",
+                  "className": "m-t",
+                  "initFetch": true,
+                  "api": {
+                    "url": "/api/land-input",
+                    "method": "get",
+                    "data": {
+                      "category": 3
+                    }
+                  },
+                  "id": "demolition-compensation-crud",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 3,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 3,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "serial_number",
+                      "label": "序号",
+                      "sortable": true,
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "indicator",
+                      "label": "指标",
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "value",
+                      "label": "取值",
+                      "sortable": true,
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline"
+                      },
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "remark",
+                      "label": "备注",
+                      "type": "operation",
+                      "toggled": true,
+                      "buttons": [
+                        {
+                          "type": "button",
+                          "label": "备注",
+                          "level": "info",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "备注",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${remark}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "label": "依据文件",
+                          "level": "dark",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "依据文件",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${basis}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "四、其他不可预见费用比例",
+          "hash": "tab4",
+          "body": [
+            {
+              "type": "form",
+              "title": "",
+              "api": {
+                "method": "post",
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 4,
+                  "computing_method": "${computing_method}"
+                }
+              },
+              "body": [
+                {
+                  "type": "crud",
+                  "className": "m-t",
+                  "initFetch": true,
+                  "api": {
+                    "url": "/api/land-input",
+                    "method": "get",
+                    "data": {
+                      "category": 4
+                    }
+                  },
+                  "id": "demolition-compensation-crud",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 4,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 4,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "serial_number",
+                      "label": "序号",
+                      "sortable": true,
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "indicator",
+                      "label": "指标",
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "value",
+                      "label": "取值",
+                      "sortable": true,
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline"
+                      },
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "remark",
+                      "label": "备注",
+                      "type": "operation",
+                      "toggled": true,
+                      "buttons": [
+                        {
+                          "type": "button",
+                          "label": "备注",
+                          "level": "info",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "备注",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${remark}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "label": "依据文件",
+                          "level": "dark",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "依据文件",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${basis}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

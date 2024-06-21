@@ -1,5 +1,12 @@
 const mysql = require('mysql');
 
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'user1',
+//   password: 'CDI2024',
+//   database: 'CDICalculations'
+// });
+
 const connection = mysql.createConnection({
   host: '100.100.100.5',
   port: 6603,
