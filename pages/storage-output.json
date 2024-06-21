@@ -35,32 +35,38 @@
               "quickSaveItemApi": "",
               "columns": [
                 {
-                  "name": "序号",
+                  "name": "serial_number",
                   "label": "序号",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "项目名称",
+                  "name": "project_name",
                   "label": "项目名称",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单位",
+                  "name": "unit",
                   "label": "单位",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单价（万元）",
+                  "name": "value",
+                  "label": "数值",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "unit_price",
                   "label": "单价（万元）",
                   "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "成本（万元）",
+                  "name": "cost",
                   "label": "成本（万元）",
                   "sortable": true,
                   "type": "text",
@@ -88,32 +94,38 @@
               "quickSaveItemApi": "",
               "columns": [
                 {
-                  "name": "序号",
+                  "name": "serial_number",
                   "label": "序号",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "项目名称",
+                  "name": "project_name",
                   "label": "项目名称",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单位",
+                  "name": "unit",
                   "label": "单位",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单价（万元）",
+                  "name": "value",
+                  "label": "数值",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "unit_price",
                   "label": "单价（万元）",
                   "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "成本（万元）",
+                  "name": "cost",
                   "label": "成本（万元）",
                   "sortable": true,
                   "type": "text",
@@ -141,32 +153,38 @@
               "quickSaveItemApi": "",
               "columns": [
                 {
-                  "name": "序号",
+                  "name": "serial_number",
                   "label": "序号",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "项目名称",
+                  "name": "project_name",
                   "label": "项目名称",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单位",
+                  "name": "unit",
                   "label": "单位",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单价（万元）",
+                  "name": "value",
+                  "label": "数值",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "unit_price",
                   "label": "单价（万元）",
                   "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "成本（万元）",
+                  "name": "cost",
                   "label": "成本（万元）",
                   "sortable": true,
                   "type": "text",
@@ -194,32 +212,38 @@
               "quickSaveItemApi": "",
               "columns": [
                 {
-                  "name": "序号",
+                  "name": "serial_number",
                   "label": "序号",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "项目名称",
+                  "name": "project_name",
                   "label": "项目名称",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单位",
+                  "name": "unit",
                   "label": "单位",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单价（万元）",
+                  "name": "value",
+                  "label": "数值",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "unit_price",
                   "label": "单价（万元）",
                   "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "成本（万元）",
+                  "name": "cost",
                   "label": "成本（万元）",
                   "sortable": true,
                   "type": "text",
@@ -247,32 +271,38 @@
               "quickSaveItemApi": "",
               "columns": [
                 {
-                  "name": "序号",
+                  "name": "serial_number",
                   "label": "序号",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "项目名称",
+                  "name": "project_name",
                   "label": "项目名称",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单位",
+                  "name": "unit",
                   "label": "单位",
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "单价（万元）",
+                  "name": "value",
+                  "label": "数值",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "unit_price",
                   "label": "单价（万元）",
                   "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
                 {
-                  "name": "成本（万元）",
+                  "name": "cost",
                   "label": "成本（万元）",
                   "sortable": true,
                   "type": "text",

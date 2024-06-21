@@ -13,6 +13,15 @@
             {
               "type": "form",
               "title": "",
+              "api": {
+                "method": "post",  
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 1,
+                  "computing_method": "${computing_method}"
+                }
+              },
               "body": [
                 {
                   "type": "radios",
@@ -57,8 +66,24 @@
                     }
                   },
                   "id": "land-compensation-crud",
-                  "quickSaveApi": "",
-                  "quickSaveItemApi": "",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
                   "columns": [
                     {
                       "name": "serial_number",
@@ -138,10 +163,19 @@
         {
           "title": "二、拆迁补偿指标",
           "hash": "tab2",
-          "body": 
+          "body": [
             {
               "type": "form",
               "title": "",
+              "api": {
+                "method": "post",
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 2,
+                  "computing_method": "${computing_method}"
+                }
+              },
               "body": [
                 {
                   "type": "crud",
@@ -155,8 +189,24 @@
                     }
                   },
                   "id": "demolition-compensation-crud",
-                  "quickSaveApi": "",
-                  "quickSaveItemApi": "",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 2,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 2,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
                   "columns": [
                     {
                       "name": "serial_number",
@@ -231,15 +281,24 @@
                 }
               ]
             }
-          
+          ]
         },
         {
           "title": "三、人员（企业）补偿指标",
           "hash": "tab3",
-          "body": 
+          "body": [
             {
               "type": "form",
               "title": "",
+              "api": {
+                "method": "post",
+                "url": "/api/update-land-input",
+                "data": {
+                  "items": "${rows}",
+                  "category": 3,
+                  "computing_method": "${computing_method}"
+                }
+              },
               "body": [
                 {
                   "type": "crud",
@@ -253,8 +312,24 @@
                     }
                   },
                   "id": "demolition-compensation-crud",
-                  "quickSaveApi": "",
-                  "quickSaveItemApi": "",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 3,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 3,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
                   "columns": [
                     {
                       "name": "serial_number",
@@ -329,99 +404,130 @@
                 }
               ]
             }
+          ]
         },
         {
           "title": "四、其他不可预见费用比例",
           "hash": "tab4",
           "body": [
             {
-              "type": "crud",
-              "className": "m-t",
-              "initFetch": true,
+              "type": "form",
+              "title": "",
               "api": {
-                "url": "/api/land-input",
-                "method": "get",
+                "method": "post",
+                "url": "/api/update-land-input",
                 "data": {
-                  "category": 4
+                  "items": "${rows}",
+                  "category": 4,
+                  "computing_method": "${computing_method}"
                 }
               },
-              "id": "demolition-compensation-crud",
-              "quickSaveApi": "",
-              "quickSaveItemApi": "",
-              "columns": [
+              "body": [
                 {
-                  "name": "serial_number",
-                  "label": "序号",
-                  "sortable": true,
-                  "type": "text",
-                  "toggled": true
-                },
-                {
-                  "name": "indicator",
-                  "label": "指标",
-                  "type": "text",
-                  "toggled": true
-                },
-                {
-                  "name": "value",
-                  "label": "取值",
-                  "sortable": true,
-                  "quickEdit": {
-                    "type": "input-text",
-                    "required": true,
-                    "mode": "inline"
+                  "type": "crud",
+                  "className": "m-t",
+                  "initFetch": true,
+                  "api": {
+                    "url": "/api/land-input",
+                    "method": "get",
+                    "data": {
+                      "category": 4
+                    }
                   },
-                  "type": "text",
-                  "toggled": true
-                },
-                {
-                  "name": "remark",
-                  "label": "备注",
-                  "type": "operation",
-                  "toggled": true,
-                  "buttons": [
+                  "id": "demolition-compensation-crud",
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 4,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 4,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "columns": [
                     {
-                      "type": "button",
-                      "label": "备注",
-                      "level": "info",
-                      "actionType": "drawer",
-                      "drawer": {
-                        "position": "right",
-                        "size": "sm",
-                        "title": "备注",
-                        "body": {
-                          "type": "tpl",
-                          "tpl": "${remark}",
-                          "style": {
-                            "white-space": "pre-wrap"
-                          }
-                        }
-                      }
+                      "name": "serial_number",
+                      "label": "序号",
+                      "sortable": true,
+                      "type": "text",
+                      "toggled": true
                     },
                     {
-                      "type": "button",
-                      "label": "依据文件",
-                      "level": "dark",
-                      "actionType": "drawer",
-                      "drawer": {
-                        "position": "right",
-                        "size": "sm",
-                        "title": "依据文件",
-                        "body": {
-                          "type": "tpl",
-                          "tpl": "${basis}",
-                          "style": {
-                            "white-space": "pre-wrap"
+                      "name": "indicator",
+                      "label": "指标",
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "value",
+                      "label": "取值",
+                      "sortable": true,
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline"
+                      },
+                      "type": "text",
+                      "toggled": true
+                    },
+                    {
+                      "name": "remark",
+                      "label": "备注",
+                      "type": "operation",
+                      "toggled": true,
+                      "buttons": [
+                        {
+                          "type": "button",
+                          "label": "备注",
+                          "level": "info",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "备注",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${remark}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "label": "依据文件",
+                          "level": "dark",
+                          "actionType": "drawer",
+                          "drawer": {
+                            "position": "right",
+                            "size": "sm",
+                            "title": "依据文件",
+                            "body": {
+                              "type": "tpl",
+                              "tpl": "${basis}",
+                              "style": {
+                                "white-space": "pre-wrap"
+                              }
+                            }
                           }
                         }
-                      }
+                      ]
                     }
                   ]
                 }
               ]
             }
           ]
-        
         }
       ]
     }
