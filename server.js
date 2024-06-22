@@ -90,7 +90,7 @@ app.post('/api/update-land-input', (req, res) => {
   }
 
   const promises = updates.map(item => {
-    const query = "UPDATE land_acquisition_cost_input SET value = ? WHERE serial_number = ? AND category = ?";
+    const query = "UPDATE land_acquisition_cost_input SET value = ? WHERE serial_number like ? AND category = ?";
     console.log("Executing query:", query, [item.value, item.serial_number, category]);
     return new Promise((resolve, reject) => {
       db.query(query, [item.value, item.serial_number, category], (err, result) => {
@@ -138,30 +138,29 @@ function calculateAndUpdateEstimates(category, computing_method) {
           WHERE project_name = '土地补偿费';
         `);
       } else if (computing_method == 2) { // 已知片区内各细分土地类型和补偿标准
-        const serialNumbers = [1.1, 1.2, 1.3, 1.4];
-        const valuesQuery = serialNumbers.map(num => `(SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = ${num})`).join(' + ');
         queries.push(`
-          UPDATE land_acquisition_cost_input
-          SET value = (${valuesQuery})
-          WHERE indicator = '总地块面积（亩）';
+          SET @total_area = (SELECT SUM(value) FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE '1.%');
         `);
-        const avgQuery = serialNumbers.map(num => `(SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = ${num + 1})`).join(' + ');
         queries.push(`
-          UPDATE land_acquisition_cost_input
-          SET value = (${avgQuery}) / ${serialNumbers.length}
-          WHERE indicator = '平均综合征地补偿标准（万元/亩）';
+        SET @avg_compensation = (SELECT AVG(value) FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE '2.%');
+        `);
+        queries.push(`
+          UPDATE land_acquisition_cost_input SET value = @total_area WHERE indicator = '总地块面积（亩）';
+        `);
+        queries.push(`
+          UPDATE land_acquisition_cost_input SET value = @avg_compensation WHERE indicator = '平均综合征地补偿标准（万元/亩）';
         `);
         queries.push(`
           UPDATE land_acquisition_cost_estimate
           SET cost = (
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 1.1) *
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 2.1) +
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 1.2) *
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 2.2) +
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 1.3) *
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 2.3) +
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 1.4) *
-            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number = 2.4)
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 1.1) *
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 2.1) +
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 1.2) *
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 2.2) +
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 1.3) *
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 2.3) +
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 1.4) *
+            (SELECT value FROM land_acquisition_cost_input WHERE category = 1 AND serial_number LIKE 2.4)
           )
           WHERE project_name = '土地补偿费';
         `);
@@ -188,7 +187,7 @@ function calculateAndUpdateEstimates(category, computing_method) {
         `);
         if (project.name === '耕地占用税') {
           queries.push(`
-            SELECT @unit_price := (SELECT unit_price FROM land_acquisition_cost_estimate WHERE project_name = '耕地占用税');
+            SET @unit_price = (SELECT unit_price FROM land_acquisition_cost_estimate WHERE project_name = '耕地占用税');
           `);
           queries.push(`
             UPDATE land_acquisition_cost_estimate

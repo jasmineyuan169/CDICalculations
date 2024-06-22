@@ -11,17 +11,8 @@
           "hash": "tab1",
           "body": [
             {
-              "type": "form",
+              "type": "panel",
               "title": "",
-              "api": {
-                "method": "post",  
-                "url": "/api/update-land-input",
-                "data": {
-                  "items": "${rows}",
-                  "category": 1,
-                  "computing_method": "${computing_method}"
-                }
-              },
               "body": [
                 {
                   "type": "radios",
@@ -43,7 +34,7 @@
                       "actions": [
                         {
                           "actionType": "reload",
-                          "componentId": "land-compensation-crud",
+                          "componentId": "land_compensation_crud",
                           "args": {
                             "category": 1,
                             "computing_method": "${computing_method}"
@@ -55,31 +46,12 @@
                 },
                 {
                   "type": "crud",
+                  "id": "land_compensation_crud",
                   "className": "m-t",
-                  "initFetch": true,
                   "api": {
                     "url": "/api/land-cost-input",
                     "method": "get",
                     "data": {
-                      "category": 1,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "id": "land-compensation-crud",
-                  "quickSaveApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 1,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "quickSaveItemApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
                       "category": 1,
                       "computing_method": "${computing_method}"
                     }
@@ -102,11 +74,6 @@
                       "name": "value",
                       "label": "取值",
                       "sortable": true,
-                      "quickEdit": {
-                        "type": "input-text",
-                        "required": true,
-                        "mode": "inline"
-                      },
                       "type": "text",
                       "toggled": true
                     },
@@ -119,7 +86,7 @@
                         {
                           "type": "button",
                           "label": "备注",
-                          "level": "info",
+                          "level": "light",
                           "actionType": "drawer",
                           "drawer": {
                             "position": "right",
@@ -137,7 +104,7 @@
                         {
                           "type": "button",
                           "label": "依据文件",
-                          "level": "dark",
+                          "level": "info",
                           "actionType": "drawer",
                           "drawer": {
                             "position": "right",
@@ -149,6 +116,59 @@
                               "style": {
                                 "white-space": "pre-wrap"
                               }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name":"operation",
+                      "label":"操作",
+                      "type":"operation",
+                      "toggled":true,
+                      "buttons":[
+                        {
+                          "type": "button",
+                          "label": "编辑",
+                          "actionType": "dialog",
+                          "level":"dark",
+                          "dialog": {
+                            "title": "编辑取值",
+                            "body": {
+                              "type": "form",
+                              "api": {
+                                "method": "post",
+                                "url": "/api/update-land-input",
+                                "data": {
+                                  "items": [
+                                    {
+                                      "serial_number": "${serial_number}",
+                                      "indicator": "${indicator}",
+                                      "value": "${value}",
+                                      "remark": "${remark}",
+                                      "basis": "${basis}"
+                                    }
+                                  ],
+                                  "category": 1,
+                                  "computing_method": "${computing_method}"
+                                }
+                              },
+                              "body": [
+                                {
+                                  "type": "input-text",
+                                  "name": "indicator",
+                                  "label": "指标",
+                                  "value": "${indicator}",
+                                  "disabled": true
+                                },
+                                {
+                                  "type": "input-text",
+                                  "name": "value",
+                                  "label": "取值",
+                                  "required": true,
+                                  "value": "${value}"
+                                }
+                              ]
                             }
                           }
                         }
@@ -165,117 +185,116 @@
           "hash": "tab2",
           "body": [
             {
-              "type": "form",
-              "title": "",
+              "type": "crud",
+              "id": "demolition_compensation_crud",
+              "className": "m-t",
               "api": {
-                "method": "post",
-                "url": "/api/update-land-input",
+                "url": "/api/land-input",
+                "method": "get",
                 "data": {
-                  "items": "${rows}",
-                  "category": 2,
-                  "computing_method": "${computing_method}"
+                  "category": 2
                 }
               },
-              "body": [
+              "columns": [
                 {
-                  "type": "crud",
-                  "className": "m-t",
-                  "initFetch": true,
-                  "api": {
-                    "url": "/api/land-input",
-                    "method": "get",
-                    "data": {
-                      "category": 2
-                    }
-                  },
-                  "id": "demolition-compensation-crud",
-                  "quickSaveApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 2,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "quickSaveItemApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 2,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "columns": [
+                  "name": "serial_number",
+                  "label": "序号",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "indicator",
+                  "label": "指标",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "value",
+                  "label": "取值",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "remark",
+                  "label": "备注",
+                  "type": "operation",
+                  "toggled": true,
+                  "buttons": [
                     {
-                      "name": "serial_number",
-                      "label": "序号",
-                      "sortable": true,
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "indicator",
-                      "label": "指标",
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "value",
-                      "label": "取值",
-                      "sortable": true,
-                      "quickEdit": {
-                        "type": "input-text",
-                        "required": true,
-                        "mode": "inline"
-                      },
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "remark",
+                      "type": "button",
                       "label": "备注",
-                      "type": "operation",
-                      "toggled": true,
-                      "buttons": [
-                        {
-                          "type": "button",
-                          "label": "备注",
-                          "level": "info",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "备注",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${remark}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "type": "button",
-                          "label": "依据文件",
-                          "level": "dark",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "依据文件",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${basis}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
+                      "level": "info",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "备注",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${remark}",
+                          "style": {
+                            "white-space": "pre-wrap"
                           }
                         }
-                      ]
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "依据文件",
+                      "level": "dark",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "依据文件",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${basis}",
+                          "style": {
+                            "white-space": "pre-wrap"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "编辑",
+                      "level": "primary",
+                      "actionType": "dialog",
+                      "dialog": {
+                        "title": "编辑取值",
+                        "body": {
+                          "type": "form",
+                          "api": {
+                            "method": "post",
+                            "url": "/api/update-land-input",
+                            "data": {
+                              "items": [
+                                {
+                                  "serial_number": "${serial_number}",
+                                  "indicator": "${indicator}",
+                                  "value": "${value}",
+                                  "remark": "${remark}",
+                                  "basis": "${basis}"
+                                }
+                              ],
+                              "category": 2,
+                              "computing_method": "${computing_method}"
+                            }
+                          },
+                          "body": [
+                            {
+                              "type": "input-number",
+                              "name": "value",
+                              "label": "取值",
+                              "required": true,
+                              "value": "${value}"
+                            }
+                          ]
+                        }
+                      }
                     }
                   ]
                 }
@@ -288,117 +307,116 @@
           "hash": "tab3",
           "body": [
             {
-              "type": "form",
-              "title": "",
+              "type": "crud",
+              "id": "person_compensation_crud",
+              "className": "m-t",
               "api": {
-                "method": "post",
-                "url": "/api/update-land-input",
+                "url": "/api/land-input",
+                "method": "get",
                 "data": {
-                  "items": "${rows}",
-                  "category": 3,
-                  "computing_method": "${computing_method}"
+                  "category": 3
                 }
               },
-              "body": [
+              "columns": [
                 {
-                  "type": "crud",
-                  "className": "m-t",
-                  "initFetch": true,
-                  "api": {
-                    "url": "/api/land-input",
-                    "method": "get",
-                    "data": {
-                      "category": 3
-                    }
-                  },
-                  "id": "demolition-compensation-crud",
-                  "quickSaveApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 3,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "quickSaveItemApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 3,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "columns": [
+                  "name": "serial_number",
+                  "label": "序号",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "indicator",
+                  "label": "指标",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "value",
+                  "label": "取值",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "remark",
+                  "label": "备注",
+                  "type": "operation",
+                  "toggled": true,
+                  "buttons": [
                     {
-                      "name": "serial_number",
-                      "label": "序号",
-                      "sortable": true,
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "indicator",
-                      "label": "指标",
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "value",
-                      "label": "取值",
-                      "sortable": true,
-                      "quickEdit": {
-                        "type": "input-text",
-                        "required": true,
-                        "mode": "inline"
-                      },
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "remark",
+                      "type": "button",
                       "label": "备注",
-                      "type": "operation",
-                      "toggled": true,
-                      "buttons": [
-                        {
-                          "type": "button",
-                          "label": "备注",
-                          "level": "info",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "备注",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${remark}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "type": "button",
-                          "label": "依据文件",
-                          "level": "dark",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "依据文件",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${basis}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
+                      "level": "info",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "备注",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${remark}",
+                          "style": {
+                            "white-space": "pre-wrap"
                           }
                         }
-                      ]
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "依据文件",
+                      "level": "dark",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "依据文件",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${basis}",
+                          "style": {
+                            "white-space": "pre-wrap"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "编辑",
+                      "level": "primary",
+                      "actionType": "dialog",
+                      "dialog": {
+                        "title": "编辑取值",
+                        "body": {
+                          "type": "form",
+                          "api": {
+                            "method": "post",
+                            "url": "/api/update-land-input",
+                            "data": {
+                              "items": [
+                                {
+                                  "serial_number": "${serial_number}",
+                                  "indicator": "${indicator}",
+                                  "value": "${value}",
+                                  "remark": "${remark}",
+                                  "basis": "${basis}"
+                                }
+                              ],
+                              "category": 3,
+                              "computing_method": "${computing_method}"
+                            }
+                          },
+                          "body": [
+                            {
+                              "type": "input-number",
+                              "name": "value",
+                              "label": "取值",
+                              "required": true,
+                              "value": "${value}"
+                            }
+                          ]
+                        }
+                      }
                     }
                   ]
                 }
@@ -411,117 +429,116 @@
           "hash": "tab4",
           "body": [
             {
-              "type": "form",
-              "title": "",
+              "type": "crud",
+              "id": "other_compensation_crud",
+              "className": "m-t",
               "api": {
-                "method": "post",
-                "url": "/api/update-land-input",
+                "url": "/api/land-input",
+                "method": "get",
                 "data": {
-                  "items": "${rows}",
-                  "category": 4,
-                  "computing_method": "${computing_method}"
+                  "category": 4
                 }
               },
-              "body": [
+              "columns": [
                 {
-                  "type": "crud",
-                  "className": "m-t",
-                  "initFetch": true,
-                  "api": {
-                    "url": "/api/land-input",
-                    "method": "get",
-                    "data": {
-                      "category": 4
-                    }
-                  },
-                  "id": "demolition-compensation-crud",
-                  "quickSaveApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 4,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "quickSaveItemApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": "${items}",
-                      "category": 4,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "columns": [
+                  "name": "serial_number",
+                  "label": "序号",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "indicator",
+                  "label": "指标",
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "value",
+                  "label": "取值",
+                  "sortable": true,
+                  "type": "text",
+                  "toggled": true
+                },
+                {
+                  "name": "remark",
+                  "label": "备注",
+                  "type": "operation",
+                  "toggled": true,
+                  "buttons": [
                     {
-                      "name": "serial_number",
-                      "label": "序号",
-                      "sortable": true,
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "indicator",
-                      "label": "指标",
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "value",
-                      "label": "取值",
-                      "sortable": true,
-                      "quickEdit": {
-                        "type": "input-text",
-                        "required": true,
-                        "mode": "inline"
-                      },
-                      "type": "text",
-                      "toggled": true
-                    },
-                    {
-                      "name": "remark",
+                      "type": "button",
                       "label": "备注",
-                      "type": "operation",
-                      "toggled": true,
-                      "buttons": [
-                        {
-                          "type": "button",
-                          "label": "备注",
-                          "level": "info",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "备注",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${remark}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "type": "button",
-                          "label": "依据文件",
-                          "level": "dark",
-                          "actionType": "drawer",
-                          "drawer": {
-                            "position": "right",
-                            "size": "sm",
-                            "title": "依据文件",
-                            "body": {
-                              "type": "tpl",
-                              "tpl": "${basis}",
-                              "style": {
-                                "white-space": "pre-wrap"
-                              }
-                            }
+                      "level": "info",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "备注",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${remark}",
+                          "style": {
+                            "white-space": "pre-wrap"
                           }
                         }
-                      ]
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "依据文件",
+                      "level": "dark",
+                      "actionType": "drawer",
+                      "drawer": {
+                        "position": "right",
+                        "size": "sm",
+                        "title": "依据文件",
+                        "body": {
+                          "type": "tpl",
+                          "tpl": "${basis}",
+                          "style": {
+                            "white-space": "pre-wrap"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "编辑",
+                      "level": "primary",
+                      "actionType": "dialog",
+                      "dialog": {
+                        "title": "编辑取值",
+                        "body": {
+                          "type": "form",
+                          "api": {
+                            "method": "post",
+                            "url": "/api/update-land-input",
+                            "data": {
+                              "items": [
+                                {
+                                  "serial_number": "${serial_number}",
+                                  "indicator": "${indicator}",
+                                  "value": "${value}",
+                                  "remark": "${remark}",
+                                  "basis": "${basis}"
+                                }
+                              ],
+                              "category": 4,
+                              "computing_method": "${computing_method}"
+                            }
+                          },
+                          "body": [
+                            {
+                              "type": "input-number",
+                              "name": "value",
+                              "label": "取值",
+                              "required": true,
+                              "value": "${value}"
+                            }
+                          ]
+                        }
+                      }
                     }
                   ]
                 }
