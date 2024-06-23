@@ -288,7 +288,7 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 1,
+                              "category": 2,
                               "computing_method": "${computing_method}"
                             }
                           },
@@ -425,7 +425,7 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 1,
+                              "category": 3,
                               "computing_method": "${computing_method}"
                             }
                           },
@@ -562,7 +562,7 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 1,
+                              "category": 4,
                               "computing_method": "${computing_method}"
                             }
                           },

@@ -205,6 +205,50 @@ function calculateAndUpdateEstimates(category, computing_method) {
         }
       });
     }
+    else if(category==2){
+
+      queries.push(`
+        SET @total_demolition = (SELECT SUM(value) FROM land_acquisition_cost_input WHERE category = 2 AND serial_number LIKE '1.%');
+        `);
+      queries.push(`
+        UPDATE land_acquisition_cost_input SET value = @total_demolition WHERE indicator = '总拆迁面积（平方米）';
+      `);
+            
+      const projects = [
+        { name: '住宅拆迁成本', inputs: [16, 18] },
+        { name: '非住宅拆迁成本', inputs: [17, 19] },
+        { name: '拆迁清运费', inputs: [15, 20] },
+        { name: '住宅拆迁评估费', inputs: [16, 22] },
+        { name: '非住宅拆迁评估费', inputs: [17, 23] },
+      ];
+
+      projects.forEach(project => {
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET value = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[0]}')
+          WHERE project_name = '${project.name}';
+        `);
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET unit_price = (SELECT value/10000 FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')
+          WHERE project_name = '${project.name}';
+        `);
+        
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET cost = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[0]}') *
+          (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')/10000
+          WHERE project_name = '${project.name}';
+        `);
+      }); 
+    }
+
+    else if(category==3){
+
+    }
+    else if(category==4){
+
+    }
 
     console.log("Executing queries:", queries);
 
