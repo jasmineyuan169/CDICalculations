@@ -204,6 +204,16 @@ function calculateAndUpdateEstimates(category, computing_method) {
           `);
         }
       });
+
+      queries.push(`
+        SET @land_compensation = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 1);
+      `);
+
+      queries.push(`
+      UPDATE land_acquisition_cost_estimate
+      SET cost = @land_compensation
+      WHERE project_name = '土地补偿成本小计';
+    `);
     }
     else if(category==2){
       queries.push(`
@@ -240,7 +250,18 @@ function calculateAndUpdateEstimates(category, computing_method) {
           WHERE project_name = '${project.name}';
         `);
       }); 
-    }
+     
+      queries.push(`
+        SET @demolition_compensation = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 2);
+        `);
+
+      queries.push(`
+      UPDATE land_acquisition_cost_estimate
+      SET cost = @demolition_compensation
+      WHERE project_name = '拆迁补偿成本小计';
+    `);
+
+      }
 
     else if(category==3){
       queries.push(`
@@ -326,13 +347,59 @@ function calculateAndUpdateEstimates(category, computing_method) {
         `);
       queries.push(`
         UPDATE land_acquisition_cost_estimate SET cost = @housing_demolition_and_resettlement WHERE project_name = '住宅拆迁安置费';
-      `); 
+      `);
+     
+      queries.push(`
+        SET @person_compensation = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 3);
+        `);
+
+      queries.push(`
+      UPDATE land_acquisition_cost_estimate
+      SET cost = @person_compensation
+      WHERE project_name = '人员（企业）补偿成本小计';
+    `);
+
     }
 
     else if(category==4){
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate
+        SET value = (SELECT value FROM land_acquisition_cost_input WHERE indicator = '不可预见费用占比（%）')
+        WHERE project_name = '其他不可预见费用';
+      `);
 
+      queries.push(`
+        SET @unforseen_expenses_unitprice = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE project_name in('土地补偿成本小计','拆迁补偿成本小计','人员（企业）补偿成本小计'));
+        `);
+
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate
+        SET unit_price = @unforseen_expenses_unitprice
+        WHERE project_name = '其他不可预见费用';
+    ` ); 
+   
+      queries.push(`
+        SET @unforseen_expenses = (SELECT value FROM land_acquisition_cost_estimate WHERE project_name = '其他不可预见费用')*
+        (SELECT unit_price FROM land_acquisition_cost_estimate WHERE project_name = '其他不可预见费用')
+        `);
+
+      queries.push(`
+      UPDATE land_acquisition_cost_estimate
+      SET cost = @unforseen_expenses/100
+      WHERE project_name = '其他不可预见费用';
+` ); 
     }
 
+    // 总成本计算
+    queries.push(`
+      SET @overall_cost = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE project_name in('土地补偿成本小计','拆迁补偿成本小计','人员（企业）补偿成本小计','其他不可预见费用'));
+      `);
+
+    queries.push(`
+      UPDATE land_acquisition_cost_estimate
+      SET cost = @overall_cost
+      WHERE project_name = '总成本';`);
+ 
     console.log("Executing queries:", queries);
 
     const promises = queries.map(query => {
