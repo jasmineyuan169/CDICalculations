@@ -86,7 +86,7 @@
                         {
                           "type": "button",
                           "label": "备注",
-                          "level": "light",
+                          "level": "info",
                           "actionType": "drawer",
                           "drawer": {
                             "position": "right",
@@ -104,7 +104,7 @@
                         {
                           "type": "button",
                           "label": "依据文件",
-                          "level": "info",
+                          "level": "dark",
                           "actionType": "drawer",
                           "drawer": {
                             "position": "right",
@@ -131,7 +131,7 @@
                           "type": "button",
                           "label": "编辑",
                           "actionType": "dialog",
-                          "level":"dark",
+                          "level":"link",
                           "dialog": {
                             "title": "编辑取值",
                             "body": {
@@ -257,12 +257,20 @@
                           }
                         }
                       }
-                    },
+                    }
+                  ]
+                },
+                {
+                  "name":"operation",
+                  "label":"操作",
+                  "type":"operation",
+                  "toggled":true,
+                  "buttons":[
                     {
                       "type": "button",
                       "label": "编辑",
-                      "level": "primary",
                       "actionType": "dialog",
+                      "level":"link",
                       "dialog": {
                         "title": "编辑取值",
                         "body": {
@@ -280,13 +288,20 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 2,
+                              "category": 1,
                               "computing_method": "${computing_method}"
                             }
                           },
                           "body": [
                             {
-                              "type": "input-number",
+                              "type": "input-text",
+                              "name": "indicator",
+                              "label": "指标",
+                              "value": "${indicator}",
+                              "disabled": true
+                            },
+                            {
+                              "type": "input-text",
                               "name": "value",
                               "label": "取值",
                               "required": true,
@@ -379,12 +394,20 @@
                           }
                         }
                       }
-                    },
+                    }
+                  ]
+                },
+                {
+                  "name":"operation",
+                  "label":"操作",
+                  "type":"operation",
+                  "toggled":true,
+                  "buttons":[
                     {
                       "type": "button",
                       "label": "编辑",
-                      "level": "primary",
                       "actionType": "dialog",
+                      "level":"link",
                       "dialog": {
                         "title": "编辑取值",
                         "body": {
@@ -402,13 +425,20 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 3,
+                              "category": 1,
                               "computing_method": "${computing_method}"
                             }
                           },
                           "body": [
                             {
-                              "type": "input-number",
+                              "type": "input-text",
+                              "name": "indicator",
+                              "label": "指标",
+                              "value": "${indicator}",
+                              "disabled": true
+                            },
+                            {
+                              "type": "input-text",
                               "name": "value",
                               "label": "取值",
                               "required": true,
@@ -501,12 +531,20 @@
                           }
                         }
                       }
-                    },
+                    }
+                  ]
+                },
+                {
+                  "name":"operation",
+                  "label":"操作",
+                  "type":"operation",
+                  "toggled":true,
+                  "buttons":[
                     {
                       "type": "button",
                       "label": "编辑",
-                      "level": "primary",
                       "actionType": "dialog",
+                      "level":"link",
                       "dialog": {
                         "title": "编辑取值",
                         "body": {
@@ -524,13 +562,20 @@
                                   "basis": "${basis}"
                                 }
                               ],
-                              "category": 4,
+                              "category": 1,
                               "computing_method": "${computing_method}"
                             }
                           },
                           "body": [
                             {
-                              "type": "input-number",
+                              "type": "input-text",
+                              "name": "indicator",
+                              "label": "指标",
+                              "value": "${indicator}",
+                              "disabled": true
+                            },
+                            {
+                              "type": "input-text",
                               "name": "value",
                               "label": "取值",
                               "required": true,
