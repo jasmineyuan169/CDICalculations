@@ -206,7 +206,6 @@ function calculateAndUpdateEstimates(category, computing_method) {
       });
     }
     else if(category==2){
-
       queries.push(`
         SET @total_demolition = (SELECT SUM(value) FROM land_acquisition_cost_input WHERE category = 2 AND serial_number LIKE '1.%');
         `);
@@ -215,11 +214,11 @@ function calculateAndUpdateEstimates(category, computing_method) {
       `);
             
       const projects = [
-        { name: '住宅拆迁成本', inputs: [16, 18] },
-        { name: '非住宅拆迁成本', inputs: [17, 19] },
-        { name: '拆迁清运费', inputs: [15, 20] },
-        { name: '住宅拆迁评估费', inputs: [16, 22] },
-        { name: '非住宅拆迁评估费', inputs: [17, 23] },
+        { name: '住宅拆迁成本', inputs: [16, 18] }, // 住宅面积（平方米）, 住宅拆迁成本（元/平方米）/10000
+        { name: '非住宅拆迁成本', inputs: [17, 19] }, // 非住宅面积（平方米）, 非住宅拆迁成本（含设备、装修赔偿费等）（元/平方米）/10000
+        { name: '拆迁清运费', inputs: [15, 20] }, // 总拆迁面积（平方米）, 拆迁清运费(元/平方米）/10000
+        { name: '住宅拆迁评估费', inputs: [16, 22] }, // 住宅面积（平方米）, 住宅（元/平方米）/10000 (C29)
+        { name: '非住宅拆迁评估费', inputs: [17, 23] }, // 非住宅面积（平方米）, 非住宅（元/平方米）/10000
       ];
 
       projects.forEach(project => {
@@ -244,8 +243,92 @@ function calculateAndUpdateEstimates(category, computing_method) {
     }
 
     else if(category==3){
+      queries.push(`
+        SET @rural_household_registration = (SELECT value FROM land_acquisition_cost_input WHERE category = 3 AND serial_number = 1);
+        `); // 片区农村户口数（人）
+      queries.push(`
+        UPDATE land_acquisition_cost_input SET value = 0.5*@rural_household_registration WHERE category = 3 AND serial_number LIKE 1.1;
+      `); // 劳动力人口数（人）(输入表)
+      queries.push(`
+        UPDATE land_acquisition_cost_input SET value = 0.2*@rural_household_registration WHERE category = 3 AND serial_number LIKE 1.2;
+      `); // 超转人员数（人）(输入表)
+            
+      const projects = [
+        { name: '劳动力安置补助费', inputs: [25,29] }, // 劳动力人口数（人）, 劳动力安置补助费（万元/人）
+        { name: '超转人员安置补助费', inputs: [26,30] }, // 超转人员数（人）, 超转人员补助费（万元/人）
+        { name: '一次性搬迁补助费用', inputs: [15,31] }, // 总拆迁面积（平方米）, 一次性搬迁补助费标准（元/平方米）/10000
+        { name: '二次搬迁补助费用', inputs: [34,32] }, // 回迁安置面积, 二次搬迁补助费（元/平方米）/10000
+        { name: '提前搬迁奖励费', inputs: [27,33] }, // 片区总户数（户）, 提前搬家奖励费（元/户）/10000
+        { name: '停业停产补助费', inputs: [17,38] }, // 非住宅面积（平方米）, 停业停产补助费（元/平方米）/10000
+        { name: '住宅临时安置周转费', inputs: [16,40] }, // 住宅面积（平方米）, 住宅（元/平方米）/10000 (C51)
+        { name: '非住宅临时安置周转费', inputs: [17,41] }, // 非住宅面积（平方米）, 非住宅（元/平方米）/10000 (C52)
+        { name: '回迁安置', inputs: [34,36] }, // 回迁安置面积, 回迁安置补偿单价（元/平方米）/10000
+        { name: '货币补偿', inputs: [35,37] }, // 货币安置面积, 货币安置补偿单价（元/平方米）/10000
+        { name: '安置房建设评估费', inputs: [34,42] } // 回迁安置面积, 安置房建设评估费单价（元/平方米）/10000
+      ];
 
+      projects.forEach(project => {
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET value = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[0]}')
+          WHERE project_name = '${project.name}';
+        `);
+
+        if(project.name!='劳动力安置补助费'||project.name!='超转人员安置补助费'){
+          queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET unit_price = (SELECT value/10000 FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')
+          WHERE project_name = '${project.name}';
+        `);
+        
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET cost = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[0]}') *
+          (SELECT value/10000 FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')
+          WHERE project_name = '${project.name}';
+        `);
+        } 
+        
+        else{
+          queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET unit_price = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')
+          WHERE project_name = '${project.name}';
+        `);
+        
+        queries.push(`
+          UPDATE land_acquisition_cost_estimate
+          SET cost = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[0]}') *
+          (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.inputs[1]}')
+          WHERE project_name = '${project.name}';
+        `);
+        }
+        
+      });
+
+      // 安置补助费（输出表）成本更新
+      queries.push(`
+        SET @resettlement_subsidy = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 3 AND serial_number LIKE '1.%');
+        `);
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate SET cost = @resettlement_subsidy WHERE project_name = '安置补助费';
+      `);
+      // 临时安置周转费(输出表)成本更新
+      queries.push(`
+        SET @temporary_resettlement = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 3 AND serial_number LIKE '6.%');
+        `);
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate SET cost = @temporary_resettlement WHERE project_name = '临时安置周转费';
+      `); 
+      // 住宅拆迁安置费（输出表）成本更新
+      queries.push(`
+        SET @housing_demolition_and_resettlement = (SELECT SUM(cost) FROM land_acquisition_cost_estimate WHERE category = 3 AND serial_number LIKE '7.%');
+        `);
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate SET cost = @housing_demolition_and_resettlement WHERE project_name = '住宅拆迁安置费';
+      `); 
     }
+
     else if(category==4){
 
     }
