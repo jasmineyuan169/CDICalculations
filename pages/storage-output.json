@@ -6,10 +6,15 @@
       "type": "button-toolbar",
       "buttons": [
         {
-          "type": "button",
-          "label": "导出",
+          "type": "action",
+          "actionType": "ajax",
+          "label": "输出表导出",
           "level": "primary",
-          "icon": "fa fa-download pull-left"
+          "icon": "fa fa-download pull-left",
+          "api": {
+            "method": "post",
+            "url": "/api/export-csv"
+          }
         }
       ]
     },
