@@ -3,6 +3,19 @@
   "title": "",
   "body": [
     {
+      "type": "button-toolbar",
+      "buttons": [
+        {
+          "type": "action",
+          "actionType": "download",
+          "label": "底稿下载",
+          "level": "primary",
+          "icon": "fa fa-download pull-left",
+          "api": "/api/download_draft"
+        }
+      ]
+    },
+    {
       "type": "tabs",
       "tabsMode": "tiled",
       "tabs": [
@@ -60,7 +73,6 @@
                     {
                       "name": "serial_number",
                       "label": "序号",
-                      "sortable": true,
                       "type": "text",
                       "toggled": true
                     },
@@ -73,7 +85,6 @@
                     {
                       "name": "value",
                       "label": "取值",
-                      "sortable": true,
                       "type": "text",
                       "toggled": true
                     },
@@ -199,7 +210,6 @@
                 {
                   "name": "serial_number",
                   "label": "序号",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
@@ -212,7 +222,6 @@
                 {
                   "name": "value",
                   "label": "取值",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
@@ -336,7 +345,6 @@
                 {
                   "name": "serial_number",
                   "label": "序号",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
@@ -349,7 +357,6 @@
                 {
                   "name": "value",
                   "label": "取值",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
@@ -473,7 +480,6 @@
                 {
                   "name": "serial_number",
                   "label": "序号",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },
@@ -486,7 +492,6 @@
                 {
                   "name": "value",
                   "label": "取值",
-                  "sortable": true,
                   "type": "text",
                   "toggled": true
                 },

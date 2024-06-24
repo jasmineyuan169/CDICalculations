@@ -5,6 +5,7 @@ const reload = require('reload');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const db = require('./db');
+const fs = require('fs');
 
 const app = express();
 
@@ -14,6 +15,75 @@ app.use(bodyParser.json()); // 解析json、multi-part（文件）、url-encoded
 
 app.use('/public', express.static('public'));
 app.use('/pages', express.static('pages'));
+
+// 底稿下载
+app.get('/api/download_draft', (req, res) => {
+  console.log("Download draft called.");
+  const filePath = path.join(__dirname, 'public', '【土地收储整备】土地收储成本.xlsx');
+  res.download(filePath, 'Land_acquisition_and_storage.xlsx', (err) => {
+    if (err) {
+      console.error('Error downloading file:', err);
+      res.status(500).send('Error downloading file');
+    }
+  });
+});
+
+async function fetchData(category) {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT serial_number, project_name, unit, value, unit_price, cost FROM land_acquisition_cost_estimate WHERE category = ?";
+    db.query(query, [category], (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(results);
+    });
+  });
+}
+
+// 输出表csv导出
+app.post('/api/export-csv', async (req, res) => {
+  try {
+    console.log('Export CSV API called via POST');
+    const categories = [1, 2, 3, 4, 5];
+    const sheetNames = ['土地补偿成本', '拆迁补偿成本', '人员（企业）补偿成本', '其他不可预见费用', '总成本'];
+
+    let csvData = '';
+
+    for (let i = 0; i < categories.length; i++) {
+      console.log(`Fetching data for category ${categories[i]}`);
+      const data = await fetchData(categories[i]);
+      console.log(`Data for category ${categories[i]}:`, data);
+
+      // 添加标题行
+      if (csvData !== '') {
+        csvData += '\n'; // 添加空行分隔不同的类别数据
+      }
+      csvData += `${sheetNames[i]}\n`;
+      csvData += '序号,项目名称,单位,数值,单价（万元）,成本（万元）\n';
+
+      // 将数据添加到CSV中
+      data.forEach(item => {
+        csvData += `${item.serial_number},${item.project_name},${item.unit},${item.value},${item.unit_price},${item.cost}\n`;
+      });
+    }
+
+    const filePath = path.join(__dirname, 'public', '输出表.csv');
+    fs.writeFileSync(filePath, csvData);
+    console.log('CSV file created at:', filePath);
+
+    res.download(filePath, 'Land_acquisition_and_storage_output.csv', (err) => {
+      if (err) {
+        console.error('Error downloading file:', err);
+        res.status(500).json({ error: 'Error downloading file' });
+      } else {
+        console.log('File download initiated');
+      }
+    });
+  } catch (error) {
+    console.error('Error in export-csv API:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // 土地收储成本-输出值表
 app.get('/api/land-costs', (req, res) => {
