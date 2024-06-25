@@ -16,19 +16,37 @@ app.use(bodyParser.json()); // 解析json、multi-part（文件）、url-encoded
 app.use('/public', express.static('public'));
 app.use('/pages', express.static('pages'));
 
-// 底稿下载
-app.get('/api/download_draft', (req, res) => {
-  console.log("Download draft called.");
-  const filePath = path.join(__dirname, 'public', '【土地收储整备】土地收储成本.xlsx');
-  res.download(filePath, 'Land_acquisition_and_storage.xlsx', (err) => {
+// 文件下载API(依据文件、底稿)
+app.get('/api/download-file', (req, res) => {
+  const { filename } = req.query;
+  const filePath = path.join(__dirname, 'public', filename);
+
+  fs.stat(filePath, (err, stats) => {
     if (err) {
+      console.error('File not found:', err);
+      return res.status(404).send('File not found');
+    }
+
+    const fileExtension = path.extname(filename).toLowerCase();
+    let contentType = 'application/octet-stream';
+
+    if (fileExtension === '.pdf') {
+      contentType = 'application/pdf';
+    } else if (fileExtension === '.xlsx') {
+      contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    }
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Disposition', `attachment; filename=${encodeURIComponent(path.basename(filename))}`); // 可读中文文件名
+
+    fs.createReadStream(filePath).pipe(res).on('error', (err) => {
       console.error('Error downloading file:', err);
       res.status(500).send('Error downloading file');
-    }
+    });
   });
 });
 
-async function fetchData(category) {
+async function fetchData(category) { // 输出表数据库数据导入（用于输出表下载）
   return new Promise((resolve, reject) => {
     const query = "SELECT serial_number, project_name, unit, value, unit_price, cost FROM land_acquisition_cost_estimate WHERE category = ?";
     db.query(query, [category], (err, results) => {
@@ -67,7 +85,7 @@ app.post('/api/export-csv', async (req, res) => {
       });
     }
 
-    const filePath = path.join(__dirname, 'public', '输出表.csv');
+    const filePath = path.join(__dirname, 'public', '【土地收储整备】土地收储成本-输出表.csv');
     fs.writeFileSync(filePath, csvData);
     console.log('CSV file created at:', filePath);
 
@@ -105,11 +123,11 @@ app.get('/api/land-costs', (req, res) => {
   });
 });
 
-// 土地收储成本-输入表1（土地补偿指标）导入
+// 土地收储成本-输入表1（土地补偿指标）导入 需要判断计算方式
 app.get('/api/land-cost-input', (req, res) => {
   const category = req.query.category;
   const computing_method = req.query.computing_method;
-  const query = "SELECT serial_number, indicator, value, remark, basis FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (?,3)";
+  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (?,3)";
   db.query(query, [category, computing_method], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);
@@ -129,7 +147,7 @@ app.get('/api/land-cost-input', (req, res) => {
 // 土地收储成本-其他输入表（除输入表1）导入
 app.get('/api/land-input', (req, res) => {
   const category = req.query.category;
-  const query = "SELECT serial_number, indicator, value, remark, basis FROM land_acquisition_cost_input WHERE category = ?";
+  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ?";
   db.query(query, [category], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);

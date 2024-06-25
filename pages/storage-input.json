@@ -11,7 +11,13 @@
           "label": "底稿下载",
           "level": "primary",
           "icon": "fa fa-download pull-left",
-          "api": "/api/download_draft"
+          "api": {
+            "url":"/api/download-file",
+            "method":"get",
+            "data": {
+              "filename": "【土地收储整备】土地收储成本.xlsx"
+            }
+          }
         }
       ]
     },
@@ -121,13 +127,29 @@
                             "position": "right",
                             "size": "sm",
                             "title": "依据文件",
-                            "body": {
+                            "body": [
+                              {
                               "type": "tpl",
                               "tpl": "${basis}",
                               "style": {
                                 "white-space": "pre-wrap"
                               }
+                            },
+                            {
+                              "type": "button",
+                              "label": "下载",
+                              "level": "link",
+                              "actionType": "download",
+                              "visibleOn": "${url != null && url !== ''}",
+                              "api": {
+                                "url": "/api/download-file",
+                                "method": "get",
+                                "data": {
+                                  "filename": "${url}"
+                                }
+                              }
                             }
+                          ]
                           }
                         }
                       ]
@@ -258,13 +280,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
+                          "api": {
+                            "url": "/api/download-file",
+                            "method": "get",
+                            "data": {
+                              "filename": "${url}"
+                            }
+                          }
                         }
+                      ]
                       }
                     }
                   ]
@@ -393,13 +431,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
+                          "api": {
+                            "url": "/api/download-file",
+                            "method": "get",
+                            "data": {
+                              "filename": "${url}"
+                            }
+                          }
                         }
+                      ]
                       }
                     }
                   ]
@@ -528,13 +582,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
+                          "api": {
+                            "url": "/api/download-file",
+                            "method": "get",
+                            "data": {
+                              "filename": "${url}"
+                            }
+                          }
                         }
+                      ]
                       }
                     }
                   ]
