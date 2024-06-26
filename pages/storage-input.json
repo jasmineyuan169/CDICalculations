@@ -75,6 +75,33 @@
                       "computing_method": "${computing_method}"
                     }
                   },
+                  "quickSaveApi": 
+                  {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": "${items}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
+                  "quickSaveItemApi": {
+                    "method": "post",
+                    "url": "/api/update-land-input",
+                    "data": {
+                      "items": [
+                        {
+                          "serial_number": "${serial_number}",
+                          "indicator": "${indicator}",
+                          "value": "${value}",
+                          "remark": "${remark}",
+                          "basis": "${basis}"
+                        }
+                      ],
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
                   "columns": [
                     {
                       "name": "serial_number",
@@ -162,9 +189,10 @@
                       "buttons":[
                         {
                           "type": "button",
-                          "label": "编辑",
+                          "label": "编辑取值",
                           "actionType": "dialog",
                           "level":"link",
+                          "visibleOn": "${!(computing_method == 2 && (serial_number == 1 || serial_number == 2) && category == 1)}",
                           "dialog": {
                             "title": "编辑取值",
                             "body": {
@@ -316,7 +344,7 @@
                   "buttons":[
                     {
                       "type": "button",
-                      "label": "编辑",
+                      "label": "编辑取值",
                       "actionType": "dialog",
                       "level":"link",
                       "dialog": {
@@ -468,7 +496,7 @@
                   "buttons":[
                     {
                       "type": "button",
-                      "label": "编辑",
+                      "label": "编辑取值",
                       "actionType": "dialog",
                       "level":"link",
                       "dialog": {
@@ -620,7 +648,7 @@
                   "buttons":[
                     {
                       "type": "button",
-                      "label": "编辑",
+                      "label": "编辑取值",
                       "actionType": "dialog",
                       "level":"link",
                       "dialog": {

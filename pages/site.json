@@ -13,7 +13,6 @@
               "type": "input-tree",
               "name": "tree",
               "label": "测算模型一览表", 
-              "initiallyOpen": false,
               "heightAuto": 400,
               "options": [
                 {

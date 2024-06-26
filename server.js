@@ -127,7 +127,7 @@ app.get('/api/land-costs', (req, res) => {
 app.get('/api/land-cost-input', (req, res) => {
   const category = req.query.category;
   const computing_method = req.query.computing_method;
-  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (?,3)";
+  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (1,?,3)";
   db.query(query, [category, computing_method], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);
