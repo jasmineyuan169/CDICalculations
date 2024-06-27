@@ -75,29 +75,12 @@
                       "computing_method": "${computing_method}"
                     }
                   },
-                  "quickSaveApi": 
-                  {
+                  "quickSaveApi": {
                     "method": "post",
-                    "url": "/api/update-land-input",
+                    "url": "/api/bulk-update-land-input",
                     "data": {
-                      "items": "${items}",
-                      "category": 1,
-                      "computing_method": "${computing_method}"
-                    }
-                  },
-                  "quickSaveItemApi": {
-                    "method": "post",
-                    "url": "/api/update-land-input",
-                    "data": {
-                      "items": [
-                        {
-                          "serial_number": "${serial_number}",
-                          "indicator": "${indicator}",
-                          "value": "${value}",
-                          "remark": "${remark}",
-                          "basis": "${basis}"
-                        }
-                      ],
+                      "rowsDiff": "${rowsDiff}",
+                      "ids": "${ids}",
                       "category": 1,
                       "computing_method": "${computing_method}"
                     }
@@ -119,6 +102,12 @@
                       "name": "value",
                       "label": "取值",
                       "type": "text",
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline",
+                        "disabledOn":"(computing_method == 2 && (serial_number == 1 || serial_number == 2))"
+                      },
                       "toggled": true
                     },
                     {
@@ -257,6 +246,16 @@
                   "category": 2
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 2,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -274,6 +273,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                      "type": "input-text",
+                      "required": false,
+                      "mode": "inline",
+                      "disabledOn":"(serial_number == 1 || serial_number == 5)"
+                    },
                   "toggled": true
                 },
                 {
@@ -346,6 +351,7 @@
                       "type": "button",
                       "label": "编辑取值",
                       "actionType": "dialog",
+                      "visibleOn": "${indicator!='总拆迁面积（平方米）'}",
                       "level":"link",
                       "dialog": {
                         "title": "编辑取值",
@@ -409,6 +415,16 @@
                   "category": 3
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 3,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -426,6 +442,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                    "type": "input-text",
+                    "required": true,
+                    "mode": "inline",
+                    "disabledOn":""
+                  },
                   "toggled": true
                 },
                 {
@@ -561,6 +583,16 @@
                   "category": 4
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 4,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -578,6 +610,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                    "type": "input-text",
+                    "required": true,
+                    "mode": "inline",
+                    "disabledOn":""
+                  },
                   "toggled": true
                 },
                 {

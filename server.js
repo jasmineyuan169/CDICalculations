@@ -127,7 +127,7 @@ app.get('/api/land-costs', (req, res) => {
 app.get('/api/land-cost-input', (req, res) => {
   const category = req.query.category;
   const computing_method = req.query.computing_method;
-  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (1,?,3)";
+  const query = "SELECT id, serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ? AND computing_method in (1,?,3)";
   db.query(query, [category, computing_method], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);
@@ -147,7 +147,7 @@ app.get('/api/land-cost-input', (req, res) => {
 // 土地收储成本-其他输入表（除输入表1）导入
 app.get('/api/land-input', (req, res) => {
   const category = req.query.category;
-  const query = "SELECT serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ?";
+  const query = "SELECT id, serial_number, indicator, value, remark, basis, url FROM land_acquisition_cost_input WHERE category = ?";
   db.query(query, [category], (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);
@@ -164,7 +164,7 @@ app.get('/api/land-input', (req, res) => {
   });
 });
 
-// 更新land_acquisition_cost_input表中的取值
+// 编辑按钮编辑取值
 app.post('/api/update-land-input', (req, res) => {
   const updates = req.body.items || []; // 确保updates是一个数组
   const category = req.body.category;
@@ -178,7 +178,7 @@ app.post('/api/update-land-input', (req, res) => {
   }
 
   const promises = updates.map(item => {
-    const query = "UPDATE land_acquisition_cost_input SET value = ? WHERE serial_number like ? AND category = ?";
+    const query = "UPDATE land_acquisition_cost_input SET value = ? WHERE serial_number LIKE ? AND category = ?";
     console.log("Executing query:", query, [item.value, item.serial_number, category]);
     return new Promise((resolve, reject) => {
       db.query(query, [item.value, item.serial_number, category], (err, result) => {
@@ -207,6 +207,55 @@ app.post('/api/update-land-input', (req, res) => {
       res.status(500).send('Error updating input values');
     });
 });
+
+// 使用内嵌式输入框编辑取值
+app.post('/api/bulk-update-land-input', (req, res) => {
+  const rowDiff = req.body.rowsDiff || [];
+  const ids = req.body.ids ? req.body.ids.split(',') : [];
+  const category = req.body.category;
+  const computing_method = req.body.computing_method;
+
+  console.log("Received rowDiff:", rowDiff);
+  console.log("Category:", category);
+  console.log("Computing Method:", computing_method);
+  console.log("IDs:", ids);
+
+  if (!Array.isArray(rowDiff) || rowDiff.length === 0 || ids.length === 0) {
+    return res.status(400).send('Invalid data format');
+  }
+
+  const promises = rowDiff.map((diff, index) => {
+    const id = ids[index];
+    const query = "UPDATE land_acquisition_cost_input SET value = ? WHERE ID = ? AND category = ?";
+    console.log("Executing query:", query, [diff.value, id, category]);
+    return new Promise((resolve, reject) => {
+      db.query(query, [diff.value, id, category], (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+  });
+
+  Promise.all(promises)
+    .then(() => {
+      // 计算并更新land_acquisition_cost_estimate表
+      calculateAndUpdateEstimates(category, computing_method)
+        .then(() => {
+          res.status(200).json({ status: 0, msg: '更新成功' });
+        })
+        .catch(err => {
+          console.error('Error updating estimates:', err);
+          res.status(500).send('Error updating estimates');
+        });
+    })
+    .catch(err => {
+      console.error('Error updating input values:', err);
+      res.status(500).send('Error updating input values');
+    });
+});
+
 
 // 计算并更新land_acquisition_cost_estimate表
 function calculateAndUpdateEstimates(category, computing_method) {
