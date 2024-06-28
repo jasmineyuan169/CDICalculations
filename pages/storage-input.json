@@ -48,6 +48,7 @@
                       "value": 2
                     }
                   ],
+                  "desc": "①若不能确定片区内细分土地类型和细分土地补偿标准，则采用【总地块面积*平均综合征地补偿标准】进行计算；<br> ②若已明确片区内各细分土地类型的面积和补偿标准，则采用【地块类型1面积*地块类型1补偿标准+地块类型2面积*地块类型2补偿标准+...】进行计算。",
                   "onEvent": {
                     "change": {
                       "actions": [
@@ -336,7 +337,7 @@
                     "type": "input-text",
                     "required": true,
                     "mode": "inline",
-                    "disabledOn":""
+                    "disabledOn":"(serial_number == 3)"
                   },
                   "toggled": true
                 },
