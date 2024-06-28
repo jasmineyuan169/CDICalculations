@@ -7,9 +7,9 @@
 ```bash   
 ssh user@100.100.100.5 -p 6868
 ```
-连接后进入根目录->volume1->nodejs->CDICalculations
+连接后进入根目录->volume1->nodejs->CDICalculations2
 ```bash  
-cd /volume1/nodejs/CDICalculations
+cd /volume1/nodejs/CDICalculations2
 ```
 
 在CDICalculations文件夹下运行以下命令后，即可通过 http://100.100.100.5:3033 在CDI局域网中使用测算软件:
