@@ -397,6 +397,22 @@ function calculateAndUpdateEstimates(category, computing_method) {
       SET cost = @demolition_compensation
       WHERE project_name = '拆迁补偿成本小计';
     `);
+    
+    // category3输出表中需要修改的条目（当category2部分条目修改时）
+    const category3_projects = [ 
+      {name:'一次性搬迁补助费用',input:15}, // 总拆迁面积（平方米）
+      {name:'停业停产补助费',input:17}, // 非住宅面积（平方米）
+      {name:'住宅临时安置周转费',input:16},  // 住宅面积（平方米）
+      {name:'非住宅临时安置周转费',input:17}, // 非住宅面积（平方米）
+    ]
+    
+    category3_projects.forEach(project => {
+      queries.push(`
+        UPDATE land_acquisition_cost_estimate
+        SET value = (SELECT value FROM land_acquisition_cost_input WHERE ID = '${project.input}')
+        WHERE project_name = '${project.name}';
+      `);
+    });
 
       }
 
