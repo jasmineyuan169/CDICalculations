@@ -169,61 +169,6 @@
                           }
                         }
                       ]
-                    },
-                    {
-                      "name":"operation",
-                      "label":"操作",
-                      "type":"operation",
-                      "toggled":true,
-                      "buttons":[
-                        {
-                          "type": "button",
-                          "label": "编辑取值",
-                          "actionType": "dialog",
-                          "level":"link",
-                          "visibleOn": "${!(computing_method == 2 && (serial_number == 1 || serial_number == 2) && category == 1)}",
-                          "dialog": {
-                            "title": "编辑取值",
-                            "body": {
-                              "type": "form",
-                              "api": {
-                                "method": "post",
-                                "url": "/api/update-land-input",
-                                "data": {
-                                  "items": [
-                                    {
-                                      "serial_number": "${serial_number}",
-                                      "indicator": "${indicator}",
-                                      "value": "${value}",
-                                      "remark": "${remark}",
-                                      "basis": "${basis}"
-                                    }
-                                  ],
-                                  "category": 1,
-                                  "computing_method": "${computing_method}"
-                                }
-                              },
-                              "body": [
-                                {
-                                  "type": "input-text",
-                                  "name": "indicator",
-                                  "label": "指标",
-                                  "value": "${indicator}",
-                                  "disabled": true
-                                },
-                                {
-                                  "type": "input-text",
-                                  "name": "value",
-                                  "label": "取值",
-                                  "required": true,
-                                  "validations": "isNumeric",
-                                  "value": "${value}"
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      ]
                     }
                   ]
                 }
@@ -337,61 +282,6 @@
                           }
                         }
                       ]
-                      }
-                    }
-                  ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑取值",
-                      "actionType": "dialog",
-                      "visibleOn": "${indicator!='总拆迁面积（平方米）'}",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
-                          "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
-                            "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 2,
-                              "computing_method": "${computing_method}"
-                            }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "validations": "isNumeric",
-                              "value": "${value}"
-                            }
-                          ]
-                        }
                       }
                     }
                   ]
@@ -509,60 +399,6 @@
                       }
                     }
                   ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑取值",
-                      "actionType": "dialog",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
-                          "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
-                            "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 3,
-                              "computing_method": "${computing_method}"
-                            }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "validations": "isNumeric",
-                              "value": "${value}"
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
                 }
               ]
             }
@@ -674,60 +510,6 @@
                           }
                         }
                       ]
-                      }
-                    }
-                  ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑取值",
-                      "actionType": "dialog",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
-                          "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
-                            "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 4,
-                              "computing_method": "${computing_method}"
-                            }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "validations": "isNumeric",
-                              "value": "${value}"
-                            }
-                          ]
-                        }
                       }
                     }
                   ]
