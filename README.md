@@ -8,6 +8,12 @@
 
 ```bash
 
+# 远程连接服务器
+通过CDI局域网远程连接100.100.100.5，如 ssh user@100.100.100.5 -p 6868
+连接后进入根目录->volume1->nodejs->CDICalculations  cd /volume1/nodejs/CDICalculations
+
+在CDICalculations文件夹下运行以下命令后，即可通过 http://100.100.100.5:3033 在CDI局域网中使用测算软件
+
 # 安装依赖
 npm i
 # 打开服务
