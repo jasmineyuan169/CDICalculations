@@ -11,7 +11,13 @@
           "label": "底稿下载",
           "level": "primary",
           "icon": "fa fa-download pull-left",
-          "api": "/api/download_draft"
+          "api": {
+            "url":"/api/download-file",
+            "method":"get",
+            "data": {
+              "filename": "【土地收储整备】土地收储成本.xlsx"
+            }
+          }
         }
       ]
     },
@@ -42,6 +48,7 @@
                       "value": 2
                     }
                   ],
+                  "desc": "①若不能确定片区内细分土地类型和细分土地补偿标准，则采用【总地块面积*平均综合征地补偿标准】进行计算；<br> ②若已明确片区内各细分土地类型的面积和补偿标准，则采用【地块类型1面积*地块类型1补偿标准+地块类型2面积*地块类型2补偿标准+...】进行计算。",
                   "onEvent": {
                     "change": {
                       "actions": [
@@ -69,6 +76,16 @@
                       "computing_method": "${computing_method}"
                     }
                   },
+                  "quickSaveApi": {
+                    "method": "post",
+                    "url": "/api/bulk-update-land-input",
+                    "data": {
+                      "rowsDiff": "${rowsDiff}",
+                      "ids": "${ids}",
+                      "category": 1,
+                      "computing_method": "${computing_method}"
+                    }
+                  },
                   "columns": [
                     {
                       "name": "serial_number",
@@ -86,6 +103,12 @@
                       "name": "value",
                       "label": "取值",
                       "type": "text",
+                      "quickEdit": {
+                        "type": "input-text",
+                        "required": true,
+                        "mode": "inline",
+                        "disabledOn":"(computing_method == 2 && (serial_number == 1 || serial_number == 2))"
+                      },
                       "toggled": true
                     },
                     {
@@ -121,66 +144,29 @@
                             "position": "right",
                             "size": "sm",
                             "title": "依据文件",
-                            "body": {
+                            "body": [
+                              {
                               "type": "tpl",
                               "tpl": "${basis}",
                               "style": {
                                 "white-space": "pre-wrap"
                               }
-                            }
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "name":"operation",
-                      "label":"操作",
-                      "type":"operation",
-                      "toggled":true,
-                      "buttons":[
-                        {
-                          "type": "button",
-                          "label": "编辑",
-                          "actionType": "dialog",
-                          "level":"link",
-                          "dialog": {
-                            "title": "编辑取值",
-                            "body": {
-                              "type": "form",
+                            },
+                            {
+                              "type": "button",
+                              "label": "下载",
+                              "level": "link",
+                              "actionType": "download",
+                              "visibleOn": "${url != null && url !== ''}",
                               "api": {
-                                "method": "post",
-                                "url": "/api/update-land-input",
+                                "url": "/api/download-file",
+                                "method": "get",
                                 "data": {
-                                  "items": [
-                                    {
-                                      "serial_number": "${serial_number}",
-                                      "indicator": "${indicator}",
-                                      "value": "${value}",
-                                      "remark": "${remark}",
-                                      "basis": "${basis}"
-                                    }
-                                  ],
-                                  "category": 1,
-                                  "computing_method": "${computing_method}"
+                                  "filename": "${url}"
                                 }
-                              },
-                              "body": [
-                                {
-                                  "type": "input-text",
-                                  "name": "indicator",
-                                  "label": "指标",
-                                  "value": "${indicator}",
-                                  "disabled": true
-                                },
-                                {
-                                  "type": "input-text",
-                                  "name": "value",
-                                  "label": "取值",
-                                  "required": true,
-                                  "value": "${value}"
-                                }
-                              ]
+                              }
                             }
+                          ]
                           }
                         }
                       ]
@@ -206,6 +192,16 @@
                   "category": 2
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 2,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -223,6 +219,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                      "type": "input-text",
+                      "required": false,
+                      "mode": "inline",
+                      "disabledOn":"(serial_number == 1 || serial_number == 5)"
+                    },
                   "toggled": true
                 },
                 {
@@ -258,66 +260,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑",
-                      "actionType": "dialog",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
                           "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
+                            "url": "/api/download-file",
+                            "method": "get",
                             "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 2,
-                              "computing_method": "${computing_method}"
+                              "filename": "${url}"
                             }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "value": "${value}"
-                            }
-                          ]
+                          }
                         }
+                      ]
                       }
                     }
                   ]
@@ -341,6 +306,16 @@
                   "category": 3
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 3,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -358,6 +333,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                    "type": "input-text",
+                    "required": true,
+                    "mode": "inline",
+                    "disabledOn":"(serial_number == 3)"
+                  },
                   "toggled": true
                 },
                 {
@@ -393,66 +374,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑",
-                      "actionType": "dialog",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
                           "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
+                            "url": "/api/download-file",
+                            "method": "get",
                             "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 3,
-                              "computing_method": "${computing_method}"
+                              "filename": "${url}"
                             }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "value": "${value}"
-                            }
-                          ]
+                          }
                         }
+                      ]
                       }
                     }
                   ]
@@ -476,6 +420,16 @@
                   "category": 4
                 }
               },
+              "quickSaveApi": {
+                "method": "post",
+                "url": "/api/bulk-update-land-input",
+                "data": {
+                  "rowsDiff": "${rowsDiff}",
+                  "ids": "${ids}",
+                  "category": 4,
+                  "computing_method": ""
+                }
+              },
               "columns": [
                 {
                   "name": "serial_number",
@@ -493,6 +447,12 @@
                   "name": "value",
                   "label": "取值",
                   "type": "text",
+                  "quickEdit": {
+                    "type": "input-text",
+                    "required": true,
+                    "mode": "inline",
+                    "disabledOn":""
+                  },
                   "toggled": true
                 },
                 {
@@ -528,66 +488,29 @@
                         "position": "right",
                         "size": "sm",
                         "title": "依据文件",
-                        "body": {
+                        "body": [
+                          {
                           "type": "tpl",
                           "tpl": "${basis}",
                           "style": {
                             "white-space": "pre-wrap"
                           }
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "name":"operation",
-                  "label":"操作",
-                  "type":"operation",
-                  "toggled":true,
-                  "buttons":[
-                    {
-                      "type": "button",
-                      "label": "编辑",
-                      "actionType": "dialog",
-                      "level":"link",
-                      "dialog": {
-                        "title": "编辑取值",
-                        "body": {
-                          "type": "form",
+                        },
+                        {
+                          "type": "button",
+                          "label": "下载",
+                          "level": "link",
+                          "actionType": "download",
+                          "visibleOn": "${url != null && url !== ''}",
                           "api": {
-                            "method": "post",
-                            "url": "/api/update-land-input",
+                            "url": "/api/download-file",
+                            "method": "get",
                             "data": {
-                              "items": [
-                                {
-                                  "serial_number": "${serial_number}",
-                                  "indicator": "${indicator}",
-                                  "value": "${value}",
-                                  "remark": "${remark}",
-                                  "basis": "${basis}"
-                                }
-                              ],
-                              "category": 4,
-                              "computing_method": "${computing_method}"
+                              "filename": "${url}"
                             }
-                          },
-                          "body": [
-                            {
-                              "type": "input-text",
-                              "name": "indicator",
-                              "label": "指标",
-                              "value": "${indicator}",
-                              "disabled": true
-                            },
-                            {
-                              "type": "input-text",
-                              "name": "value",
-                              "label": "取值",
-                              "required": true,
-                              "value": "${value}"
-                            }
-                          ]
+                          }
                         }
+                      ]
                       }
                     }
                   ]

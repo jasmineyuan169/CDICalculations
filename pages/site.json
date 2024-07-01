@@ -6,40 +6,165 @@
       {
         "label": "Home",
         "url": "/",
-        "redirect":"purchase_and_storage"
+        "schema": {
+          "type": "page",
+          "body": [
+            {
+              "type": "input-tree",
+              "name": "tree",
+              "label": "测算模型一览表", 
+              "heightAuto": 400,
+              "options": [
+                {
+                  "label": "土地收储/整备",
+                  "value": 1,
+                  "children": [
+                    {
+                      "label": "土地收储成本",
+                      "value": 1.1,
+                      "link": "#/purchase_and_storage/cost/input"
+                    }
+                  ]
+                },
+                {
+                  "label": "土地一级开发",
+                  "value": 2,
+                  "children": [
+                    {
+                      "label": "道路工程（功能开发中，敬请期待）",
+                      "value": 2.1
+                    },
+                    {
+                      "label": "市政管网（功能开发中，敬请期待）",
+                      "value": 2.2
+                    },
+                    {
+                      "label": "其他设施（功能开发中，敬请期待）",
+                      "value": 2.3
+                    }
+                  ]
+                },
+                {
+                  "label": "土地二级开发",
+                  "value": 3,
+                  "children": [
+                    {
+                      "label": "住宅（功能开发中，敬请期待）",
+                      "value": 3.1
+                    },
+                    {
+                      "label": "商业（功能开发中，敬请期待）",
+                      "value": 3.2
+                    },
+                    {
+                      "label": "办公（功能开发中，敬请期待）",
+                      "value": 3.3
+                    },
+                    {
+                      "label": "酒店（功能开发中，敬请期待）",
+                      "value": 3.4
+                    },
+                    {
+                      "label": "金融业（功能开发中，敬请期待）",
+                      "value": 3.5
+                    },
+                    {
+                      "label": "厂房（功能开发中，敬请期待）",
+                      "value": 3.6
+                    } 
+                  ]
+                }
+              ],
+              "onEvent": {
+                "change": {
+                  "actions": [
+                    {
+                      "actionType": "custom",
+                      "script": "if(event.data.value === 1.1) { window.location.hash = '#/purchase_and_storage/cost/input'; }"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
       },
       {
         "label": "投资测算模型",
         "children": [
           {
             "label": "土地收储/整备",
-            "url": "purchase_and_storage",
-            "schema": {
-              "type": "page",
-              "title": "土地收储/整备",
-              "body": ""
-            },
             "children": [
               {
                 "label": "土地收储成本",
-                "url": "cost",
-                "schema": {
-                  "type": "page",
-                  "title": "土地收储成本",
-                  "body": ""
-                },
-                "children":[
+                "children": [
                   {
                     "label": "输入数据",
-                    "url": "input",
-                    "icon":"fa fa-list",
-                    "schemaApi":"get:/pages/storage-input.json"
+                    "url": "purchase_and_storage/cost/input",
+                    "icon": "fa fa-list",
+                    "schemaApi": "get:/pages/storage-input.json"
                   },
                   {
                     "label": "输出报表",
-                    "url": "output",
-                    "icon":"fa fa-list",
-                    "schemaApi":"get:/pages/storage-output.json"
+                    "url": "purchase_and_storage/cost/output",
+                    "icon": "fa fa-list",
+                    "schemaApi": "get:/pages/storage-output.json"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "土地一级开发",
+            "children": [
+              {
+                "label": "道路工程（敬请期待）",
+                "children": [
+                  {
+                    "label": "输入数据",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
+                  },
+                  {
+                    "label": "输出报表",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
+                  }
+                ]
+              },
+              {
+                "label": "市政管网（敬请期待）",
+                "children": [
+                  {
+                    "label": "输入数据",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
+                  },
+                  {
+                    "label": "输出报表",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
+                  }
+                ]
+              },
+              {
+                "label": "其他设施（敬请期待）",
+                "children": [
+                  {
+                    "label": "输入数据",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
+                  },
+                  {
+                    "label": "输出报表",
+                    "url": "",
+                    "icon": "fa fa-list",
+                    "schemaApi": ""
                   }
                 ]
               }
